@@ -37,7 +37,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
 	implementation("org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.1")
-	implementation("org.springframework.cloud:spring-cloud-starter-aws-secrets-manager-config:2.4.1")
+	implementation("org.springframework.cloud:spring-cloud-starter-aws-secrets-manager-config:2.2.6.RELEASE")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
