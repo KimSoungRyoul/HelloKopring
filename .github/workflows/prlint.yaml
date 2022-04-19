@@ -11,7 +11,7 @@ jobs:
       - uses: morrisoncole/pr-lint-action@v1.6.1
         with:
           # JIRA-111 (PullRequest명 앞에 Jira티켓번호가 반드시 명시되어야한다)
-          title-regex: "#[A-Z]+-[0-9]+"
+          title-regex: "[A-Z]+-[0-9]+ "
           on-failed-regex-fail-action: true
           on-failed-regex-request-changes: false
           on-failed-regex-create-review: true
