@@ -16,7 +16,7 @@ jobs:
           on-failed-regex-request-changes: false
           on-failed-regex-create-review: true
           on-failed-regex-comment:
-            "Jira티켓번호(ex:AA-111)가 prefix로 명시되어야합니다."
+            "PullRequest Lint 수정요청: PR Title은 Jira티켓번호(ex:AA-111) prefix가 명시되어야 합니다."
           on-succeeded-regex-dismiss-review-comment:
             "Success!"
           repo-token: "${{ secrets.ACCESS_TOKEN}}"
