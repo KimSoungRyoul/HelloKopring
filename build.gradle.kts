@@ -45,7 +45,6 @@ dependencies {
 
     // SpringCloud AWS
     implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE") //
-    // implementation("org.springframework.cloud:spring-cloud-starter-aws-secrets-manager-config") // :2.2.6.RELEASE
     implementation("io.awspring.cloud:spring-cloud-aws-secrets-manager-config:2.4.1")
     implementation("cloud.localstack:localstack-utils:0.2.20")
     implementation("com.amazonaws:aws-java-sdk:1.12.202")
