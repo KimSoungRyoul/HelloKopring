@@ -10,6 +10,9 @@ plugins {
     // Gradle Use Latest Versions Plugin
     id("se.patrikerdes.use-latest-versions") version "0.2.18"
     id("com.github.ben-manes.versions") version "0.42.0"
+
+    // Kotlin Lint Plugin
+    id("org.jlleitschuh.gradle.ktlint-idea") version "10.2.1"
 }
 
 group = "com.example"
