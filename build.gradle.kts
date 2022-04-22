@@ -3,9 +3,14 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "2.6.6"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("jvm") version "1.6.21"
-    kotlin("plugin.spring") version "1.6.21"
-    kotlin("plugin.jpa") version "1.6.21"
+
+    val kotlinVersion = "1.6.21"
+
+    kotlin("jvm") version kotlinVersion
+    kotlin("plugin.spring") version kotlinVersion
+    kotlin("plugin.jpa") version kotlinVersion
+    kotlin("plugin.allopen") version kotlinVersion
+    kotlin("plugin.noarg") version kotlinVersion
 
     // Gradle Use Latest Versions Plugin
     id("se.patrikerdes.use-latest-versions") version "0.2.18"
@@ -13,11 +18,22 @@ plugins {
 
     // Kotlin Lint Plugin
     id("org.jlleitschuh.gradle.ktlint-idea") version "10.2.1"
+
+    // Flyway
+    id("org.flywaydb.flyway") version "8.5.8"
+
+    // SpringDoc (RESTAPI Document)
+    id("org.springdoc.openapi-gradle-plugin") version "1.3.4"
+
+    // QueryDSL
+    kotlin("kapt") version "1.3.61" // 추가
+
 }
 
 group = "com.example"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
+val querydslVersion = "5.0.0"
 
 configurations {
     compileOnly {
@@ -46,14 +62,40 @@ dependencies {
     // SpringCloud AWS
     implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE") //
     implementation("io.awspring.cloud:spring-cloud-aws-secrets-manager-config:2.4.1")
-    implementation("cloud.localstack:localstack-utils:0.2.20")
+
     implementation("com.amazonaws:aws-java-sdk:1.12.202")
+
+    implementation("io.jsonwebtoken:jjwt-api:0.11.2")
+    implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
+    implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
+
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+    // QueryDSL
+    implementation("com.querydsl:querydsl-jpa:$querydslVersion")
+    implementation("com.google.guava:guava:18.0")
+    kapt("com.querydsl:querydsl-apt:$querydslVersion:jpa")
+    kapt("org.springframework.boot:spring-boot-configuration-processor")
+
+    // Hibernate5Module이 지연로딩 되는 객체의 프로퍼티 직렬화를 가능하게 해준다. (jackson ObjectMapper support)
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.9.8")
+
+    implementation("cloud.localstack:localstack-utils:0.2.20")
+    // SpringDocs
+    implementation("org.springdoc:springdoc-openapi-kotlin:1.6.6")
+    implementation("org.springdoc:springdoc-openapi-security:1.6.7")
+
+    //Redis
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
+
+
 }
 
 dependencyManagement {
@@ -62,7 +104,13 @@ dependencyManagement {
     }
 }
 
+
 allOpen { // 추가적으로 열어줄 allOpen
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.MappedSuperclass")
+    annotation("javax.persistence.Embeddable")
+}
+noArg {
     annotation("javax.persistence.Entity")
     annotation("javax.persistence.MappedSuperclass")
     annotation("javax.persistence.Embeddable")

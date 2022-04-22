@@ -1,19 +1,15 @@
 spring:
-  config:
-    activate:
-      on-profile: local
   application:
     name: hello-kopring
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
     show-sql: on
     properties:
       hibernate:
         format_sql: true
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/hellokopring_db?autoReconnect=true
     username: root
     password: '1234'
@@ -22,18 +18,35 @@ spring:
       maximum-pool-size: 10
       jdbc-url: jdbc:mariadb://localhost:3306/hellokopring_db?autoReconnect=true
       username: root
-      password: 1234
-      driver-class-name: org.mariadb.jdbc.Driver
+      password: '1234'
       data-source-properties:
         rewriteBatchedStatements: true
+      connection-test-query: SELECT 1
 
     flyway:
       enabled: true
-      baseline-on-migrate: true
       baseline-version: 1.00
       url: jdbc:mariadb://localhost:3306/hellokopring_db?autoReconnect=true
       user: root
       password: '1234'
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+  show-actuator: true
+
+jwt:
+  base64Secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
+  jwtExpirationMs: 7200000  # 2 hours
+  jwtRefreshExpirationMs: 172800000 # 2 days
+
 
 aws:
   secretsmanager:
@@ -58,3 +71,9 @@ logging:
       amazonaws:
         util:
           EC2MetadataUtils: error
+management:
+  endpoints:
+    web:
+      path-mapping:
+        health: healthcheck
+      base-path: /monitor
