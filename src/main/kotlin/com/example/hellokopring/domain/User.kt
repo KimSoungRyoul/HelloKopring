@@ -5,15 +5,18 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.util.stream.Collectors
-
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.ElementCollection
+import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
+import javax.persistence.FetchType
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
 @Entity
 data class User(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long = 0,
+
     @Column(name = "username", length = 50, unique = true)
     private var username: @NotNull @Size(min = 4, max = 50) String,
     @Column(name = "password", length = 100)
@@ -56,5 +59,4 @@ data class User(
     override fun isEnabled(): Boolean {
         return true
     }
-
 }

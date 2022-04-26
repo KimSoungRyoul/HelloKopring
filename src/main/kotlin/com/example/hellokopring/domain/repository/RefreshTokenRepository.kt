@@ -1,14 +1,9 @@
 package com.example.hellokopring.domain.repository
 
 import com.example.hellokopring.domain.RefreshToken
-import com.example.hellokopring.domain.User
-import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.stereotype.Repository
-import java.util.*
+import org.springframework.data.repository.CrudRepository
 
-@Repository
-interface RefreshTokenRepository : JpaRepository<RefreshToken, Long?> {
-    override fun findById(id: Long): Optional<RefreshToken>
-    fun findByToken(token: String): RefreshToken?
-    fun deleteByUser(user: User): Int
+interface RefreshTokenRepository : CrudRepository<RefreshToken, String> {
+    fun existsByToken(token: String): Boolean
+    override fun deleteById(refreshTokenStr: String)
 }

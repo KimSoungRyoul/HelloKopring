@@ -1,16 +1,15 @@
 package com.example.hellokopring.domain
 
+import org.springframework.data.annotation.Id
 import org.springframework.data.redis.core.RedisHash
 import org.springframework.data.redis.core.TimeToLive
 import java.util.concurrent.TimeUnit
-import javax.persistence.Id
 
 @RedisHash("refresh_token")
 data class RefreshToken(
-    @Id
-    var userId: Long,
-    @TimeToLive(unit = TimeUnit.MINUTES)
+    @Id var id: String,
+    var user: User,
+    // var createdDate: CreatedDate,
+    @TimeToLive(unit = TimeUnit.MILLISECONDS)
     var ttl: Long,
-    var token: String,
-
-    )
+)
