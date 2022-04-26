@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  hello-kopring-application:
+    container_name: hello-kopring-application
+    image: 639295076721.dkr.ecr.ap-northeast-2.amazonaws.com/hello-kopring-backend-application:latest
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_ACTIVE_PROFILE: local
+
+  hello-kopring-mariadb:
+    container_name: hello-kopring-mariadb
+    image: mariadb:10.5.12
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./.volumes/mariadb:/var/lib/mysql
+    environment:
+      TZ: Asia/Seoul
+      MARIADB_DATABASE: kopring_db
+      MARIADB_ROOT_PASSWORD: 1234
+      MARIADB_USER: user
+      MARIADB_PASSWORD: 1234
+
