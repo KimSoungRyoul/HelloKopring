@@ -12,3 +12,7 @@ repos:
     args: [--autofix]
   - id: pretty-format-yaml
     args: [--autofix]
+- repo: https://github.com/avilaton/add-msg-issue-prefix-hook
+  rev: v0.0.5
+  hooks:
+  - id: add-msg-issue-prefix
