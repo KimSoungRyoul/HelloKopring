@@ -4,7 +4,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     show-sql: on
     properties:
       hibernate:
@@ -36,11 +36,15 @@ spring:
 springdoc:
   api-docs:
     enabled: true
-    path: /api-docs
+    #path: /v3/api-docs  <-- default
   swagger-ui:
     enabled: true
-    path: /swagger-ui.html
+    persistAuthorization: true
+    # path: /swagger-ui.html <-- default
+
   show-actuator: true
+  paths-to-match:
+    - /api/**
 
 jwt:
   base64Secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
