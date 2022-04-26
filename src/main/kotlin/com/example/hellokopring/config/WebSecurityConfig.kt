@@ -80,8 +80,6 @@ class WebSecurityConfig(
             .antMatchers("/api/**")
             .authenticated()
 
-
-
         http.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter::class.java)
     }
 }

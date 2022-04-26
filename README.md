@@ -18,16 +18,16 @@ gradle bootRun -Dspring-boot.run.profiles=local
 
 ### ktlint 로컬 환경에 걸기
 
-커맨드로 체크
+커맨드로 ktlint에 어긋나는 코드 강제 변환
 
 ```shell
-./gradlew ktlintCheck
+./gradlew ktlintFormat
 ```
 
 커밋훅 걸기
 
 ```shell
-./gradlew addKtlintCheckGitPreCommitHook
+./gradlew addKtlintFormatGitPreCommitHook
 ```
 
 Idea에 걸기

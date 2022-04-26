@@ -42,15 +42,15 @@ class AccessTokenUtils(
     override fun verifyToken(tokenString: String): Boolean {
         try {
             return (
-                    Jwts.parserBuilder()
-                        .setSigningKey(
-                            Keys.hmacShaKeyFor(jwtSecret!!.toByteArray(charset("utf-8")))
-                        )
-                        .build()
-                        .parseClaimsJws(tokenString)
-                        .body
-                            != null
+                Jwts.parserBuilder()
+                    .setSigningKey(
+                        Keys.hmacShaKeyFor(jwtSecret!!.toByteArray(charset("utf-8")))
                     )
+                    .build()
+                    .parseClaimsJws(tokenString)
+                    .body
+                    != null
+                )
         } catch (e: MalformedJwtException) {
             throw TokenException("손상된(비정상적인) access 토큰입니다.")
         } catch (e: ExpiredJwtException) {
@@ -73,7 +73,7 @@ class AccessTokenUtils(
         )
     }
 
-    override fun expireToken(token: AccessToken) {
+    override fun revokeToken(tokenStr: String) {
         throw Exception("JWT AccessToken은 expired가 불가능합니다. 해당 메서드를 사용해서는 안됩니다.")
     }
 }

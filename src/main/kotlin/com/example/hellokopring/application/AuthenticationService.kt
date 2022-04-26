@@ -22,8 +22,7 @@ class AuthenticationService(
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder,
     private val authenticationManager: AuthenticationManager,
-
-    ) {
+) {
 
     @Transactional
     fun signUp(signUpRequest: SignupRequest): User {

@@ -7,12 +7,15 @@ import com.example.hellokopring.domain.User
 import com.example.hellokopring.infrastrucutre.security.token.AccessTokenUtils
 import com.example.hellokopring.infrastrucutre.security.token.RefreshTokenUtils
 import com.example.hellokopring.presentation.schema.AuthResponse
+import com.example.hellokopring.presentation.schema.CommonResponse
 import com.example.hellokopring.presentation.schema.LoginRequestBody
 import com.example.hellokopring.presentation.schema.SignupRequest
 import com.example.hellokopring.presentation.schema.TokenRefreshRequestBody
 import com.example.hellokopring.presentation.schema.TokenRefreshResponse
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -48,10 +51,16 @@ class AuthController(
     fun reissueAccessToken(
         @RequestBody refreshRequestBody: @Valid TokenRefreshRequestBody
     ): ResponseEntity<TokenRefreshResponse> {
-        var oldRefreshToken: RefreshToken = refreshTokenUtils.retrieveToken(refreshRequestBody.refreshTokenString)
-        var newRefreshToken: RefreshToken = refreshTokenUtils.generateToken(oldRefreshToken.user)
-        var accessToken: AccessToken = accessTokenUtils.generateToken(newRefreshToken.user)
-        return ResponseEntity.ok(TokenRefreshResponse(accessToken.accessTokenStr, newRefreshToken.id))
+        var refreshToken: RefreshToken = refreshTokenUtils.retrieveToken(refreshRequestBody.refreshTokenString)
+        var accessToken: AccessToken = accessTokenUtils.generateToken(refreshToken.user)
+        return ResponseEntity.ok(TokenRefreshResponse(accessToken.accessTokenStr, refreshToken.id))
+    }
+
+    @Operation(summary = "로그아웃 (revoke RefreshToken)")
+    @DeleteMapping("/refresh-token/{refreshTokenStr}")
+    fun revokeRefreshToken(@PathVariable refreshTokenStr: String): ResponseEntity<CommonResponse> {
+        refreshTokenUtils.revokeToken(refreshTokenStr)
+        return ResponseEntity.accepted().body(CommonResponse("refreshToken 강제만료", ""))
     }
 
     @Operation(summary = "회원가입")

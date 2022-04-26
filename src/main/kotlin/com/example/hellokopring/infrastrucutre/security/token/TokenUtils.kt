@@ -11,5 +11,5 @@ interface TokenUtils<in UserDetail, Token> {
 
     fun verifyToken(tokenString: String): Boolean
 
-    fun expireToken(token: Token)
+    fun revokeToken(tokenStr: String)
 }
