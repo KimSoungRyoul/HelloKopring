@@ -17,6 +17,7 @@ plugins {
     id("com.github.ben-manes.versions") version "0.42.0"
 
     // Kotlin Lint Plugin
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
     id("org.jlleitschuh.gradle.ktlint-idea") version "10.2.1"
 
     // Flyway
@@ -80,14 +81,13 @@ dependencies {
     kapt("com.querydsl:querydsl-apt:$querydslVersion:jpa")
     kapt("org.springframework.boot:spring-boot-configuration-processor")
 
-    //mapstruct
+    // mapstruct
     implementation("org.mapstruct:mapstruct:1.4.2.Final")
     kapt("org.mapstruct:mapstruct-processor:1.4.2.Final")
 
     // Hibernate5Module이 지연로딩 되는 객체의 프로퍼티 직렬화를 가능하게 해준다. (jackson ObjectMapper support)
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.13.2")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.2")
-
 
     implementation("cloud.localstack:localstack-utils:0.2.20")
 
@@ -96,14 +96,11 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-kotlin:1.6.7")
     implementation("org.springdoc:springdoc-openapi-security:1.6.7")
 
-    //Redis
+    // Redis
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
-
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
-
-
 }
 
 dependencyManagement {
@@ -111,7 +108,6 @@ dependencyManagement {
         mavenBom("de.codecentric:spring-boot-admin-dependencies:${property("springBootAdminVersion")}")
     }
 }
-
 
 allOpen { // 추가적으로 열어줄 allOpen
     annotation("javax.persistence.Entity")
