@@ -7,7 +7,7 @@ import org.springframework.test.context.ActiveProfiles
 @ActiveProfiles("test")
 @SpringBootTest
 class HelloKopringApplicationTests {
-
+    // jira commit prefix msg hook check
     @Test
     fun contextLoads() {
     }
