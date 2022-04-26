@@ -28,7 +28,6 @@ plugins {
 
     // QueryDSL
     kotlin("kapt") version "1.3.61" // 추가
-
 }
 
 group = "com.example"
