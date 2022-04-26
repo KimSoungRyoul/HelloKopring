@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: hello-kopring
+aws:
+  secretsmanager:
+    enabled: true
+    region: ap-northeast-2
+    prefix: /secret
+
