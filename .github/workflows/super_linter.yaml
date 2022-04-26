@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [ main, FF-* ]
+    branches: [main, FF-*]
 
 jobs:
   build:
@@ -8,16 +8,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-        with:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      with:
           # Full git history is needed to get a proper list of changed files within `super-linter`
-          fetch-depth: 0
+        fetch-depth: 0
 
-      - name: Lint Code Base
-        uses: github/super-linter/slim@v4
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          VALIDATE_KOTLIN_ANDROID: false
+    - name: Lint Code Base
+      uses: github/super-linter/slim@v4
+      env:
+        VALIDATE_ALL_CODEBASE: false
+        DEFAULT_BRANCH: main
+        GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        VALIDATE_KOTLIN_ANDROID: false
+        VALIDATE_SQLFLUFF: false   # 이거 버그 덩어리 ㅡㅡ
