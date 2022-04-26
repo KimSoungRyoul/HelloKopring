@@ -57,7 +57,6 @@ dependencies {
     implementation("de.codecentric:spring-boot-admin-starter-server")
     implementation("org.flywaydb:flyway-core")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     // SpringCloud AWS
     implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE") //
@@ -69,6 +68,7 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
     implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
 
+    implementation("io.netty:netty-resolver-dns-native-macos:4.1.76.Final:osx-aarch_64")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
@@ -80,12 +80,20 @@ dependencies {
     kapt("com.querydsl:querydsl-apt:$querydslVersion:jpa")
     kapt("org.springframework.boot:spring-boot-configuration-processor")
 
+    //mapstruct
+    implementation("org.mapstruct:mapstruct:1.4.2.Final")
+    kapt("org.mapstruct:mapstruct-processor:1.4.2.Final")
+
     // Hibernate5Module이 지연로딩 되는 객체의 프로퍼티 직렬화를 가능하게 해준다. (jackson ObjectMapper support)
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.9.8")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.13.2")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.2")
+
 
     implementation("cloud.localstack:localstack-utils:0.2.20")
+
     // SpringDocs
-    implementation("org.springdoc:springdoc-openapi-kotlin:1.6.6")
+    implementation("org.springdoc:springdoc-openapi-ui:1.6.8")
+    implementation("org.springdoc:springdoc-openapi-kotlin:1.6.7")
     implementation("org.springdoc:springdoc-openapi-security:1.6.7")
 
     //Redis
