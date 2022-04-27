@@ -1,0 +1,63 @@
+on:
+  push:
+    branches: [FF-*]
+jobs:
+  createPullRequest:
+    runs-on: ubuntu-latest
+    if: startsWith(${{ GITHUB.ref_name }}, 'FF-')
+    steps:
+    - uses: ashley-taylor/regex-property-action@1.2
+      id: pr_title
+      with:
+        value: ${{ GITHUB.ref_name }}
+        regex: '[A-Z]+-[0-9]+-'
+        replacement: ''
+    - name: Login
+      uses: atlassian/gajira-login@v2.0.0
+      env:
+        JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+        JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+        JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+    - name: Jira Find issue key
+      id: jira
+      uses: atlassian/gajira-find-issue-key@v2.0.2
+      with:
+        from: branch
+#    - uses: actions/checkout@v3
+#      with:
+#        ref: ${{ GITHUB.ref_name }}
+#        token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create Pull Request
+      id: cpr
+      uses: peter-evans/create-pull-request@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: Update report
+        committer: GitHub <noreply@github.com>
+        author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+        signoff: false
+        base: main
+        branch: ${{ GITHUB.ref_name }}
+        delete-branch: false
+        title: '[${{ steps.jira.outputs.issue }}] ${{ steps.pr_title.outputs.value }}'
+        body: |
+          - 자세한 내용은 Jira 티켓을 확인하세요.
+          [Ticket 바로가기](${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.jira.outputs.issue }})
+        labels: |
+          report
+          automated pr
+        assignees: ${{ GITHUB.actor }}
+        #reviewers: peter-evans
+
+
+#
+#    - name: create PullRequest when you push
+#      id: autoPullRequest
+#      run: |
+#        gh pr create --base main \
+#                     --title "[${{ steps.jira.outputs.issue }}] ${{ steps.pr_title.outputs.value }}" \
+#                     --body "- 자세한 내용은 Jira 티켓을 확인하세요. \
+#                             [Ticket 바로가기](${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.jira.outputs.issue }})" \
+#                     --assignee ${{ GITHUB.actor }}
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
