@@ -13,13 +13,8 @@ jobs:
 
     - name: Create commits
       run: |
-        git config user.name 'Peter Evans'
-        git config user.email 'peter-evans@users.noreply.github.com'
-        date +%s > report.txt
-        git commit -am "Modify tracked file during workflow"
-        date +%s > new-report.txt
-        git add -A
-        git commit -m "Add untracked file during workflow"
+        git config user.name 'soungryoul.kim'
+        git config user.email 'kimsoungryoul@gmail.com'
 
     - name: Login
       uses: atlassian/gajira-login@v2.0.0
