@@ -2,21 +2,19 @@ name: PR Lint
 
 on:
   pull_request:
-    types: [ opened, edited, reopened, synchronize ]
+    types: [opened, edited, reopened, synchronize]
 
 jobs:
   pr-lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: morrisoncole/pr-lint-action@v1.6.1
-        with:
+    - uses: morrisoncole/pr-lint-action@v1.6.1
+      with:
           # JIRA-111 (PullRequest명 앞에 Jira티켓번호가 반드시 명시되어야한다)
-          title-regex: "[A-Z]+-[0-9]+ "
-          on-failed-regex-fail-action: true
-          on-failed-regex-request-changes: false
-          on-failed-regex-create-review: true
-          on-failed-regex-comment:
-            "PullRequest Lint 수정요청: PR Title은 Jira티켓번호(ex:AA-111) prefix가 명시되어야 합니다."
-          on-succeeded-regex-dismiss-review-comment:
-            "Success!"
-          repo-token: "${{ secrets.ACCESS_TOKEN}}"
+        title-regex: '\[+[A-Z]+-[0-9]+\]+ '
+        on-failed-regex-fail-action: true
+        on-failed-regex-request-changes: false
+        on-failed-regex-create-review: true
+        on-failed-regex-comment: 'PullRequest Lint 수정요청: PR Title은 Jira티켓번호가 명시되어야 합니다.(PR Title Example:[AA-111] blabla~)'
+        on-succeeded-regex-dismiss-review-comment: Success!
+        repo-token: ${{ secrets.ACCESS_TOKEN}}
