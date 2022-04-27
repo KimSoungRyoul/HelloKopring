@@ -33,35 +33,38 @@ jobs:
       with:
         from: branch
 
-    - name: create PullRequest when push
-      # id: autoPullRequest
-      run: gh pr create --base main --title "[FF-149] gh테스트용33" --body "this is description"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#    - name: create PullRequest when push
+#      # id: autoPullRequest
+#      run: |
+#        gh pr create --base main
+#                     --title "[${{steps.JiraTicketNumberExtractor.output.issue}}] ${{env.GITHUB_REF_NAME}}"
+#                      --body "this is description"
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
-#    - id: autoCreatePullRequest
-#      name: Create Pull Request
-#      uses: peter-evans/create-pull-request@v4.0.2
-#      with:
-#        base: main
-#        token: ${{ secrets.ACCESS_TOKEN}}
-#        commit-message: Update report
-#        committer: GitHub <noreply@github.com>
-#        author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-#        signoff: false
-#        branch: ${{env.GITHUB_REF_NAME}}
-#        delete-branch: false
-#        title: '[${{steps.JiraTicketNumberExtractor.output.issue}}] ${{env.GITHUB_REF_NAME}}'
-#        body: |
-#          Update report
-#          - Updated with *today's* date
-#          - 자세한 내용은 Jira 티켓을 확인하세요. [Ticket 바로가기][1]
-#
-#          [1]: ${{ secrets.JIRA_BASE_URL }}/browse/${{steps.JiraTicketNumberExtractor.output.issue}}
-#        labels: |
-#          report
-#          automated pr
-#        assignees: ${{ github.actor }}
-#          #reviewers: peter-evans
-#        draft: false
+    - id: autoCreatePullRequest
+      name: Create Pull Request
+      uses: peter-evans/create-pull-request@v4.0.2
+      with:
+        base: main
+        # token: ${{ secrets.ACCESS_TOKEN}}
+        commit-message: Update report
+        committer: GitHub <noreply@github.com>
+        author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+        signoff: false
+        branch: ${{env.GITHUB_REF_NAME}}
+        delete-branch: false
+        title: '[${{steps.JiraTicketNumberExtractor.output.issue}}] ${{env.GITHUB_REF_NAME}}'
+        body: |
+          Update report
+          - Updated with *today's* date
+          - 자세한 내용은 Jira 티켓을 확인하세요. [Ticket 바로가기][1]
+
+          [1]: ${{ secrets.JIRA_BASE_URL }}/browse/${{steps.JiraTicketNumberExtractor.output.issue}}
+        labels: |
+          report
+          automated pr
+        assignees: ${{ github.actor }}
+          #reviewers: peter-evans
+        draft: false
