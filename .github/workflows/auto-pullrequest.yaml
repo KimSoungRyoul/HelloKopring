@@ -26,14 +26,36 @@ jobs:
       uses: atlassian/gajira-find-issue-key@v2.0.2
       with:
         from: branch
+    - name: Create Pull Request
+      id: cpr
+      uses: peter-evans/create-pull-request@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: Update report
+        committer: GitHub <noreply@github.com>
+        author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+        signoff: false
+        branch: ${{ GITHUB.ref_name }}
+        delete-branch: true
+        title: '[${{ steps.jira.outputs.issue }}] ${{ steps.pr_title.outputs.value }}'
+        body: |
+          - 자세한 내용은 Jira 티켓을 확인하세요.
+          [Ticket 바로가기](${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.jira.outputs.issue }})
+        labels: |
+          report
+          automated pr
+        assignees: ${{ GITHUB.actor }}
+        #reviewers: peter-evans
 
-    - name: create PullRequest when you push
-      id: autoPullRequest
-      run: |
-        gh pr create --base main \
-                     --title "[${{ steps.jira.outputs.issue }}] ${{ steps.pr_title.outputs.value }}" \
-                     --body "- 자세한 내용은 Jira 티켓을 확인하세요. \
-                             [Ticket 바로가기](${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.jira.outputs.issue }})" \
-                     --assignee ${{ GITHUB.actor }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+#
+#    - name: create PullRequest when you push
+#      id: autoPullRequest
+#      run: |
+#        gh pr create --base main \
+#                     --title "[${{ steps.jira.outputs.issue }}] ${{ steps.pr_title.outputs.value }}" \
+#                     --body "- 자세한 내용은 Jira 티켓을 확인하세요. \
+#                             [Ticket 바로가기](${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.jira.outputs.issue }})" \
+#                     --assignee ${{ GITHUB.actor }}
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
