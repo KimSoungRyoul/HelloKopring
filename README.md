@@ -31,7 +31,7 @@ jenv add /Library/Java/JavaVirtualMachines/adoptopenjdk-16.jdk/Contents/Home/
 jenv global openjdk64-16.0.1
 java --version
 ```
-#### pre-commit hook 걸기
+#### pre-commit hook 걸기 (recommend)
 
 ```shell
 brew install pre-commit
