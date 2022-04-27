@@ -6,9 +6,9 @@ jobs:
 
     if: startsWith(${{ github.GITHUB_REF_NAME }}, 'FF-')
     steps:
-    - name: Set selected color
-      run: echo $GITHUB_REF_NAME
-      id: random-color-generator
+#    - name: Set selected color
+#      run: echo $GITHUB_REF_NAME
+#      id: random-color-generator
 #    - uses: actions/checkout@v3
 #      with:
 #        fetch-depth: 0
@@ -27,14 +27,14 @@ jobs:
         JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
         JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
         JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-    - id: JiraTicketNumberExtractor
-      name: Jira Find issue key
+    - name: Jira Find issue key
+      # id: JiraTicketNumberExtractor
       uses: atlassian/gajira-find-issue-key@v2.0.2
       with:
         from: branch
 
-    - id: autoPullRequest
-      name: create PullRequest when push
+    - name: create PullRequest when push
+      # id: autoPullRequest
       run: gh pr create --base main --title "[FF-149] gh테스트용33" --body "this is description"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
