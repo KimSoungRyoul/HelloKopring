@@ -22,6 +22,7 @@ jobs:
 #        git
 
     - name: Login
+      id: jira_default
       uses: atlassian/gajira-login@v2.0.0
       env:
         JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
@@ -41,7 +42,7 @@ jobs:
                      --body "Update report \
                               - Updated with *today's* date \
                              - 자세한 내용은 Jira 티켓을 확인하세요. \
-                             [Ticket 바로가기](${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.jira.outputs.issue }})" \
+                             [Ticket 바로가기](${{ jira_default.JIRA_BASE_URL }}/browse/${{ steps.jira.outputs.issue }})" \
                      --assignee ${{ github.actor }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
