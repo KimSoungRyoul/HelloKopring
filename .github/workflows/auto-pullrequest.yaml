@@ -26,9 +26,9 @@ jobs:
         committer: GitHub <noreply@github.com>
         author: ${{ github.actor }}
         signoff: false
-        branch: ${{GITHUB_REF_NAME}}
+        branch: ${{env.GITHUB_REF_NAME}}
         delete-branch: false
-        title: ${GITHUB_REF##*/}
+        title: ${{env.GITHUB_REF##*/}}
         body: |
           Update report
           - Updated with *today's* date
