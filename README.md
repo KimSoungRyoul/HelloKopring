@@ -63,4 +63,4 @@ Idea에 걸기
 
 
 
-### github cli 사용법
+### GitHub cli 사용법
