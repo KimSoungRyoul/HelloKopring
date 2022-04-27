@@ -37,7 +37,7 @@ jobs:
       # id: autoPullRequest
       run: |
         gh pr create --base main \
-                     --title "[${{steps.JiraTicketNumberExtractor.output.issue}}] ${{GITHUB_REF_NAME}}" \
+                     --title "[${{steps.JiraTicketNumberExtractor.output.issue}}] ${{github.GITHUB_REF_NAME}}" \
                      --body "Update report \
                               - Updated with *today's* date \
                              - 자세한 내용은 Jira 티켓을 확인하세요. \
