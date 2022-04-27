@@ -15,6 +15,7 @@ jobs:
       run: |
         git config user.name 'soungryoul.kim'
         git config user.email 'kimsoungryoul@gmail.com'
+        git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
     - name: Login
       uses: atlassian/gajira-login@v2.0.0
