@@ -3,6 +3,7 @@ on:
 jobs:
   createPullRequest:
     runs-on: ubuntu-latest
+    if: startsWith('${GITHUB_REF##*/}', 'FF-')
     steps:
     - name: Login
       uses: atlassian/gajira-login@v2.0.0
@@ -17,7 +18,6 @@ jobs:
         from: branch
     - id: autoCreatePullRequest
       name: Create Pull Request
-      if: contains(steps.extract_branch.outputs.branch, '${{issue}}')
       uses: peter-evans/create-pull-request@v4.0.2
       with:
         base: main
@@ -34,10 +34,10 @@ jobs:
           - Updated with *today's* date
           - 자세한 내용은 Jira 티켓을 확인하세요. [Ticket 바로가기][1]
 
-          [1]: ${{ secrets.JIRA_BASE_URL }}/browse/${{ issue }}
+          [1]: ${{ secrets.JIRA_BASE_URL }}/browse/${{steps.JiraTicketNumberExtractor.output.issue}}
         labels: |
           report
           automated pr
-         #assignees: peter-evans
+        assignees: ${{ github.actor }}
           #reviewers: peter-evans
         draft: false
