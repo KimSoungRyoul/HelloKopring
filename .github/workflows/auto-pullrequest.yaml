@@ -7,7 +7,7 @@ jobs:
     #if: startsWith(github.GITHUB_REF_NAME, 'FF-')
     steps:
     - name: Set selected color
-      run: echo 'aaaa ....${{github.GITHUB_REF_NAME}}'
+      run: echo 'aaaa ....${github.GITHUB_REF_NAME}'
       id: random-color-generator
     - name: Login
       uses: atlassian/gajira-login@v2.0.0
