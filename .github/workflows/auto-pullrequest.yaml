@@ -9,6 +9,18 @@ jobs:
     - name: Set selected color
       run: echo $GITHUB_REF_NAME
       id: random-color-generator
+    - uses: actions/checkout@v3
+
+    - name: Create commits
+      run: |
+        git config user.name 'Peter Evans'
+        git config user.email 'peter-evans@users.noreply.github.com'
+        date +%s > report.txt
+        git commit -am "Modify tracked file during workflow"
+        date +%s > new-report.txt
+        git add -A
+        git commit -m "Add untracked file during workflow"
+
     - name: Login
       uses: atlassian/gajira-login@v2.0.0
       env:
