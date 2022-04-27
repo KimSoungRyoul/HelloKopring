@@ -1,0 +1,43 @@
+on:
+  push:
+jobs:
+  createPullRequest:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Login
+      uses: atlassian/gajira-login@v2.0.0
+      env:
+        JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+        JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+        JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+    - id: JiraTicketNumberExtractor
+      name: Jira Find issue key
+      uses: atlassian/gajira-find-issue-key@v2.0.2
+      with:
+        from: branch
+    - id: autoCreatePullRequest
+      name: Create Pull Request
+      if: contains(steps.extract_branch.outputs.branch, ${{JiraTicketNumberExtractor.issue}})
+      uses: peter-evans/create-pull-request@v4.0.2
+      with:
+        base: main
+          #token: ${{ secrets.ACCESS_TOKEN}}
+        commit-message: Update report
+        committer: GitHub <noreply@github.com>
+        author: ${{ github.actor }}
+        signoff: false
+        branch: ${{GITHUB_REF_NAME}}
+        delete-branch: false
+        title: ${GITHUB_REF##*/}
+        body: |
+          Update report
+          - Updated with *today's* date
+          - 자세한 내용은 Jira 티켓을 확인하세요. [Ticket 바로가기][1]
+
+          [1]: ${{ secrets.JIRA_BASE_URL }}/browse/${{ JiraTicketNumberExtractor.issue }}
+        labels: |
+          report
+          automated pr
+         #assignees: peter-evans
+          #reviewers: peter-evans
+        draft: false
