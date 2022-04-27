@@ -36,7 +36,7 @@ jobs:
         token: ${{ secrets.ACCESS_TOKEN}}
         commit-message: Update report
         committer: GitHub <noreply@github.com>
-        author: ${{ github.actor }}
+        author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
         signoff: false
         branch: ${{env.GITHUB_REF_NAME}}
         delete-branch: false
