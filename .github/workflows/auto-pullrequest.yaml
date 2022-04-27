@@ -35,7 +35,7 @@ jobs:
 
     - name: create PullRequest when push
       # id: autoPullRequest
-      run: gh pr create --base main --title "[FF-149] gh테스트용33" --body "this is description" --repo $GITHUB_REPOSITORY
+      run: gh pr create --base main --title "[FF-149] gh테스트용33" --body "this is description"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
