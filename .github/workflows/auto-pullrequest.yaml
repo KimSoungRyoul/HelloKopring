@@ -4,7 +4,7 @@ jobs:
   createPullRequest:
     runs-on: ubuntu-latest
 
-    if: startsWith($GITHUB_REF_NAME, 'FF-')
+    if: startsWith(${{ github.GITHUB_REF_NAME }}, 'FF-')
     steps:
     - name: Set selected color
       run: echo $GITHUB_REF_NAME
