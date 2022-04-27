@@ -9,13 +9,13 @@ jobs:
     - name: Set selected color
       run: echo $GITHUB_REF_NAME
       id: random-color-generator
-    - uses: actions/checkout@v3
 
-    - name: Create commits
-      run: |
-        git config user.name 'soungryoul.kim'
-        git config user.email 'kimsoungryoul@gmail.com'
-        git config --global --add safe.directory "$GITHUB_WORKSPACE"
+#    - name: Create commits
+#      uses: actions/checkout@v3
+#      run: |
+#        git config user.name 'soungryoul.kim'
+#        git config user.email 'kimsoungryoul@gmail.com'
+#        git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
     - name: Login
       uses: atlassian/gajira-login@v2.0.0
@@ -33,7 +33,7 @@ jobs:
       uses: peter-evans/create-pull-request@v4.0.2
       with:
         base: main
-        token: ${{ secrets.ACCESS_TOKEN}}
+        # token: ${{ secrets.ACCESS_TOKEN}}
         commit-message: Update report
         committer: GitHub <noreply@github.com>
         author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
