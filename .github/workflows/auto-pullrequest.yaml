@@ -28,7 +28,7 @@ jobs:
         signoff: false
         branch: ${{env.GITHUB_REF_NAME}}
         delete-branch: false
-        title: ${{env.GITHUB_REF##*/}}
+        title: '[${{steps.JiraTicketNumberExtractor.output.issue}}] ${{env.GITHUB_REF_NAME}}'
         body: |
           Update report
           - Updated with *today's* date
