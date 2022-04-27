@@ -17,7 +17,7 @@ jobs:
         from: branch
     - id: autoCreatePullRequest
       name: Create Pull Request
-      if: contains(steps.extract_branch.outputs.branch, ${{JiraTicketNumberExtractor.issue}})
+      if: contains(steps.extract_branch.outputs.branch, '${{JiraTicketNumberExtractor.issue}}')
       uses: peter-evans/create-pull-request@v4.0.2
       with:
         base: main
