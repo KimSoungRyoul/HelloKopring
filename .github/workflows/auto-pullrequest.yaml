@@ -8,11 +8,11 @@ jobs:
     steps:
 #    - name: Set selected color
 #      run: echo $GITHUB_REF_NAME
-#      id: random-color-generator
-#    - uses: actions/checkout@v3
-#      with:
-#        fetch-depth: 0
-#        token: ${{ secrets.ACCESS_TOKEN}}
+      #id: random-color-generator
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
 #    - name: Create commits
 #      uses: actions/checkout@v3
 #      run: |
@@ -35,7 +35,7 @@ jobs:
 
     - name: create PullRequest when push
       # id: autoPullRequest
-      run: gh pr create --base main --title "[FF-149] gh테스트용33" --body "this is description"
+      run: gh pr create --base main --title "[FF-149] gh테스트용33" --body "this is description" --repo $GITHUB_REPOSITORY
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
