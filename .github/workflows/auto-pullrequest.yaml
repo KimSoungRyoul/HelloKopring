@@ -28,7 +28,7 @@ jobs:
         JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
         JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
     - name: Jira Find issue key
-      id: JiraTicketNumberExtractor
+      id: jira
       uses: atlassian/gajira-find-issue-key@v2.0.2
       with:
         from: branch
@@ -37,11 +37,11 @@ jobs:
       # id: autoPullRequest
       run: |
         gh pr create --base main \
-                     --title "[${{steps.JiraTicketNumberExtractor.output.issue}}] ${{github.GITHUB_REF_NAME}}" \
+                     --title "[${{steps.jira.outputs.issue}}] ${{github.GITHUB_REF_NAME}}" \
                      --body "Update report \
                               - Updated with *today's* date \
                              - 자세한 내용은 Jira 티켓을 확인하세요. \
-                             [Ticket 바로가기][ ${{ secrets.JIRA_BASE_URL }}/browse/${{steps.JiraTicketNumberExtractor.output.issue}}]" \
+                             [Ticket 바로가기](${{steps.jira.outputs.issue}})" \
                      --assignee ${{ github.actor }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -49,7 +49,7 @@ jobs:
 #--body "Update report \
 #                              - Updated with *today's* date \
 #                              - 자세한 내용은 Jira 티켓을 확인하세요. \
-#                              [Ticket 바로가기][ ${{ secrets.JIRA_BASE_URL }}/browse/${{steps.JiraTicketNumberExtractor.output.issue}}]"
+#                              [Ticket 바로가기][ ${{ secrets.JIRA_BASE_URL }}/browse/${{steps.jira.output.issue}}]"
 #    - id: autoCreatePullRequest
 #      name: Create Pull Request
 #      uses: peter-evans/create-pull-request@v4.0.2
@@ -62,13 +62,13 @@ jobs:
 #        signoff: false
 #        branch: ${{env.GITHUB_REF_NAME}}
 #        delete-branch: false
-#        title: '[${{steps.JiraTicketNumberExtractor.output.issue}}] ${{env.GITHUB_REF_NAME}}'
+#        title: '[${{steps.jira.output.issue}}] ${{env.GITHUB_REF_NAME}}'
 #        body: |
 #          Update report
 #          - Updated with *today's* date
 #          - 자세한 내용은 Jira 티켓을 확인하세요. [Ticket 바로가기][1]
 #
-#          [1]: ${{ secrets.JIRA_BASE_URL }}/browse/${{steps.JiraTicketNumberExtractor.output.issue}}
+#          [1]: ${{ secrets.JIRA_BASE_URL }}/browse/${{steps.jira.output.issue}}
 #        labels: |
 #          report
 #          automated pr
