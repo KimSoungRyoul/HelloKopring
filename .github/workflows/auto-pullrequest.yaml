@@ -3,7 +3,7 @@ on:
 jobs:
   createPullRequest:
     runs-on: ubuntu-latest
-    if: startsWith(${{ github.GITHUB_REF_NAME }}, 'FF-')
+    if: startsWith(${{ GITHUB.ref_name }}, 'FF-')
     steps:
     - uses: actions/checkout@v3
       with:
@@ -12,7 +12,7 @@ jobs:
     - uses: ashley-taylor/regex-property-action@1.2
       id: pr_title
       with:
-        value: ${{ github.ref_name }}
+        value: ${{ GITHUB.ref_name }}
         regex: '[A-Z]+-[0-9]+-'
         replacement: ''
     - name: Login
@@ -34,6 +34,6 @@ jobs:
                      --title "[${{ steps.jira.outputs.issue }}] ${{ steps.pr_title.outputs.value }}" \
                      --body "- 자세한 내용은 Jira 티켓을 확인하세요. \
                              [Ticket 바로가기](${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.jira.outputs.issue }})" \
-                     --assignee ${{ github.actor }}
+                     --assignee ${{ GITHUB.actor }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
