@@ -18,7 +18,3 @@ jobs:
         on-failed-regex-comment: 'PullRequest Lint 수정요청: PR Title은 Jira티켓번호가 명시되어야 합니다.(PR Title Example:[AA-111] blabla~)'
         on-succeeded-regex-dismiss-review-comment: Success!
         repo-token: ${{ secrets.ACCESS_TOKEN}}
-    - uses: ryanvade/enforce-pr-title-style-action@v1
-      name: PullRequest에 Jira 티켓명 강제 반영
-      with:
-        projectKey: FF
