@@ -1,4 +1,4 @@
-name: docker image Build & ECR push
+name: Github main branch to ECR "hello-kopring/application:latest"
 on:
   push:
     branches: [main, stage]
