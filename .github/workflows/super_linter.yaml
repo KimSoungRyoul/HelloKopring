@@ -12,13 +12,14 @@ jobs:
       uses: actions/checkout@v2
       with:
           # Full git history is needed to get a proper list of changed files within `super-linter`
-        fetch-depth: 0
+        branch: ${{ GITHUB.ref_name }}
 
     - name: Lint Code Base
       uses: github/super-linter/slim@v4
       env:
         VALIDATE_ALL_CODEBASE: false
         DEFAULT_BRANCH: main
-        GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         VALIDATE_KOTLIN_ANDROID: false
-        VALIDATE_SQLFLUFF: false   # 이거 버그 덩어리 ㅡㅡ
+        VALIDATE_SQLFLUFF: false   # sql lint인데 이거 버그 덩어리 ㅡㅡ
+        VALIDATE_DOCKERFILE_HADOLINT: false # dockerfile lint 검사에서 제외합니다.

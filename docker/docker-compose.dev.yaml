@@ -1,26 +1,55 @@
-version: "3"
+version: '3'
 
 services:
   hello-kopring-application:
     container_name: hello-kopring-application
-    image: 639295076721.dkr.ecr.ap-northeast-2.amazonaws.com/hello-kopring-backend-application:latest
+    image: 639295076721.dkr.ecr.ap-northeast-2.amazonaws.com/hello-kopring/application:latest
     ports:
-      - "8080:8080"
+    - 8080:8080
     environment:
-      SPRING_ACTIVE_PROFILE: local
+      SPRING_ACTIVE_PROFILE: dev
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
 
   hello-kopring-mariadb:
     container_name: hello-kopring-mariadb
-    image: mariadb:10.5.12
+    image: mariadb:10.7.3
     restart: always
     ports:
-      - "3306:3306"
+    - 3306:3306
     volumes:
-      - ./.volumes/mariadb:/var/lib/mysql
+    - ./.volumes/mariadb:/var/lib/mysql
     environment:
       TZ: Asia/Seoul
-      MARIADB_DATABASE: kopring_db
+      MARIADB_DATABASE: hellokopring_db
       MARIADB_ROOT_PASSWORD: 1234
       MARIADB_USER: user
       MARIADB_PASSWORD: 1234
 
+  hello-kopring-localstack:
+    container_name: hello-kopring-localstack
+    image: localstack/localstack:0.14.2
+    ports:
+    - 4566-4597:4566-4597
+    environment:
+    - AWS_DEFAULT_REGION=ap-northeast-2
+    - EDGE_PORT=4566
+    - SERVICES=sns,sqs,s3
+    - DEBUG=1
+    - DATA_DIR=/tmp/localstack/data
+    - HOSTNAME_EXTERNAL=localstack
+    volumes:
+    - ./.volumes/localstack:/tmp/localstack/data
+
+
+  hello-kopring-redis:
+    image: redis:6.2.6-alpine3.15
+    container_name: hello-kopring-redis
+    platform: linux/amd64      # MACOS m1 에서만 필요로하는 옵션
+    ports:
+    - 6379:6379
+    volumes:
+    - ./.volumes/redis:/data
+    labels:
+    - name=cache
+    - environment=dev

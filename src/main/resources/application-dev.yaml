@@ -1,15 +1,13 @@
 spring:
   application:
     name: hello-kopring
-
+  config:
+    activate:
+      on-profile: dev
 cloud:
   aws:
+    credentials:
+      secret-key: $AWS_SECRET_ACCESS_KEY
+      access-key: $AWS_ACCESS_KEY_ID
     region:
       static: ap-northeast-2
-aws:
-  secretsmanager:
-    enabled: true
-    region: ap-northeast-2
-    prefix: /secret
-
-

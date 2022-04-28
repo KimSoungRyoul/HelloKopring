@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 
-@ActiveProfiles("test")
 @SpringBootTest
+@ActiveProfiles(profiles = ["test"])
 class HelloKopringApplicationTests {
     // jira commit prefix msg hook check
     @Test

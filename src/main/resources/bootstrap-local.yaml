@@ -1,0 +1,10 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+aws:
+  secretsmanager:
+    prefix: /application-secret
+    enabled: false
+    name: hello-kopring
+    region: ap-northeast-2
