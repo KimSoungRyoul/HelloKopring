@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 
 services:
   hello-kopring-mariadb:
@@ -6,9 +6,9 @@ services:
     image: mariadb:10.7.3
     restart: always
     ports:
-      - "3306:3306"
+    - 3306:3306
     volumes:
-      - ./.volumes/mariadb:/var/lib/mysql
+    - ./.volumes/mariadb:/var/lib/mysql
     environment:
       TZ: Asia/Seoul
       MARIADB_DATABASE: hellokopring_db
@@ -20,26 +20,26 @@ services:
     container_name: hello-kopring-localstack
     image: localstack/localstack:0.14.2
     ports:
-      - '4566-4597:4566-4597'
+    - 4566-4597:4566-4597
     environment:
-      - AWS_DEFAULT_REGION=ap-northeast-2
-      - EDGE_PORT=4566
-      - SERVICES=sns,sqs,s3
-      - DEBUG=1
-      - DATA_DIR=/tmp/localstack/data
-      - HOSTNAME_EXTERNAL=localstack
+    - AWS_DEFAULT_REGION=ap-northeast-2
+    - EDGE_PORT=4566
+    - SERVICES=sns,sqs,s3
+    - DEBUG=1
+    - DATA_DIR=/tmp/localstack/data
+    - HOSTNAME_EXTERNAL=localstack
     volumes:
-      - ./.volumes/localstack:/tmp/localstack/data
+    - ./.volumes/localstack:/tmp/localstack/data
 
 
   hello-kopring-redis:
     image: redis:6.2.6-alpine3.15
     container_name: hello-kopring-redis
-    platform: "linux/amd64"    # MACOS m1 에서만 필요로하는 옵션
+    platform: linux/amd64      # MACOS m1 에서만 필요로하는 옵션
     ports:
-      - "6379:6379"
+    - 6379:6379
     volumes:
-      - ./.volumes/redis:/data
+    - ./.volumes/redis:/data
     labels:
-      - "name=cache"
-      - "environment=dev"
+    - name=cache
+    - environment=dev
