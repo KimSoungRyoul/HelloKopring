@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        branch: ${{ github.ref_name }}
+        ref: ${{ github.ref_name }}
         token: ${{ secrets.GITHUB_TOKEN }}
     - uses: ashley-taylor/regex-property-action@1.2
       id: pr_title
