@@ -12,7 +12,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
-import java.lang.String
 import java.util.stream.Collectors
 import javax.validation.ConstraintViolationException
 
@@ -23,12 +22,9 @@ class GlobalExceptionHandler {
         MethodArgumentNotValidException::class
     )
     fun handleValidationException(ex: MethodArgumentNotValidException): CommonResponse {
-        val errorMessages = String.join(
-            ",",
-            ex.bindingResult.allErrors.stream()
-                .map { obj: ObjectError -> obj.defaultMessage }
-                .collect(Collectors.toList())
-        )
+        val errorMessages: String = ex.bindingResult.allErrors.stream()
+            .map { obj: ObjectError -> obj.defaultMessage }
+            .collect(Collectors.toList()).joinToString(separator = ",")
         return CommonResponse(errorMessages, "")
     }
 

@@ -44,7 +44,7 @@ class AccessTokenUtils(
             return (
                 Jwts.parserBuilder()
                     .setSigningKey(
-                        Keys.hmacShaKeyFor(jwtSecret!!.toByteArray(charset("utf-8")))
+                        Keys.hmacShaKeyFor(jwtSecret.toByteArray(charset("utf-8")))
                     )
                     .build()
                     .parseClaimsJws(tokenString)
@@ -65,7 +65,7 @@ class AccessTokenUtils(
             tokenString,
             Jwts.parserBuilder()
                 .setSigningKey(
-                    Keys.hmacShaKeyFor(jwtSecret!!.toByteArray(charset("utf-8")))
+                    Keys.hmacShaKeyFor(jwtSecret.toByteArray(charset("utf-8")))
                 )
                 .build()
                 .parseClaimsJws(tokenString)
@@ -73,7 +73,7 @@ class AccessTokenUtils(
         )
     }
 
-    override fun revokeToken(tokenStr: String) {
+    override fun revokeToken(tokenString: String) {
         throw Exception("JWT AccessToken은 expired가 불가능합니다. 해당 메서드를 사용해서는 안됩니다.")
     }
 }

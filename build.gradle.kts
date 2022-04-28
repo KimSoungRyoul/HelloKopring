@@ -59,10 +59,11 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
     // SpringCloud AWS
+    implementation("org.springframework.cloud:spring-cloud-aws-core")
     implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE") //
-    implementation("io.awspring.cloud:spring-cloud-aws-secrets-manager-config:2.4.1")
-
-    implementation("com.amazonaws:aws-java-sdk:1.12.202")
+    // implementation("io.awspring.cloud:spring-cloud-aws-secrets-manager-config:2.4.1")
+    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.1")
+    implementation("org.springframework.cloud:spring-cloud-starter-aws-secrets-manager-config:2.2.6.RELEASE")
 
     implementation("io.jsonwebtoken:jjwt-api:0.11.2")
     implementation("io.jsonwebtoken:jjwt-impl:0.11.2")

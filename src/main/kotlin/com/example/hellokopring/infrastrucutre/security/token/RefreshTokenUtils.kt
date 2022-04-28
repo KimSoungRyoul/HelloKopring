@@ -25,12 +25,12 @@ class RefreshTokenUtils(
         )
     }
 
-    override fun revokeToken(tokenStr: String) {
-        return refreshTokenRepository.deleteById(tokenStr)
+    override fun revokeToken(tokenString: String) {
+        return refreshTokenRepository.deleteById(tokenString)
     }
 
-    override fun verifyToken(authToken: String): Boolean {
-        return refreshTokenRepository.existsByToken(authToken) ||
+    override fun verifyToken(tokenString: String): Boolean {
+        return refreshTokenRepository.existsByToken(tokenString) ||
             throw TokenException("RefreshToken 만료됨 로그인 다시하세요.")
     }
 
