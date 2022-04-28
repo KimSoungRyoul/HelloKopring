@@ -38,6 +38,6 @@ jobs:
         pr_template: .github/PULL_REQUEST_TEMPLATE.md
           #pr_reviewer: "wei,worker"
         pr_assignee: kimsoungryoul
-        pr_label: AutoPullRequestAction,NewFeature                                   # Comma-separated list (no spaces)
+        pr_label: AutoPullRequestAction,NewFeature  # 공백없이 ,로 split되어집니다
         pr_allow_empty: false                                # 브랜치에 변경사항 없으면 AutoPullRequest 생성 생략됩니다
         github_token: ${{ secrets.GITHUB_TOKEN }}
