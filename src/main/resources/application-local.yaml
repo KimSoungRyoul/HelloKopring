@@ -1,7 +1,6 @@
 spring:
   application:
     name: hello-kopring
-
   jpa:
     hibernate:
       ddl-auto: validate
@@ -33,41 +32,20 @@ spring:
     host: 127.0.0.1
     port: 6379
 
-springdoc:
-  api-docs:
-    enabled: true
-    #path: /v3/api-docs  <-- default
-  swagger-ui:
-    enabled: true
-    persistAuthorization: true
-    # path: /swagger-ui.html <-- default
-
-  show-actuator: true
-  paths-to-match:
-    - /api/**
-
-jwt:
-  base64Secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
-  jwtExpirationMs: 7200000  # 2 hours
-  jwtRefreshExpirationMs: 172800000 # 2 days
-
-
-aws:
-  secretsmanager:
-    enabled: false
 cloud:
   aws:
-    stack:
-      auto: false
     end-point:
       uri: http://localhost:4566
-    region:
-      static: ap-northeast-2
-    credentials:
-      profile-name: fmf # FarmMorningFamily
     s3:
       bucket: hello-kopring-uploaded-files
       path: media-files/
+    region:
+      static: ap-northeast-2
+    credentials:
+      secret-key: $AWS_SECRET_ACCESS_KEY
+      access-key: $AWS_ACCESS_KEY_ID
+    stack:
+      auto: false
 
 logging:
   level:
@@ -75,6 +53,21 @@ logging:
       amazonaws:
         util:
           EC2MetadataUtils: error
+
+springdoc:
+  swagger-ui:
+    enabled: 'true'
+    persistAuthorization: 'true'
+  paths-to-match: /api/**
+  show-actuator: 'true'
+  api-docs:
+    enabled: 'true'
+
+jwt:
+  base64Secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
+  jwtExpirationMs: 7200000  # 2 hours
+  jwtRefreshExpirationMs: 172800000 # 2 days
+
 management:
   endpoints:
     web:
