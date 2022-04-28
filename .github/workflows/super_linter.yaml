@@ -1,3 +1,4 @@
+name: kotlin을 포함한 다양한 Lint 검토
 on:
   push:
     branches: [main, FF-*]
