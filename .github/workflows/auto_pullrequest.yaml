@@ -1,0 +1,43 @@
+name: Auto PullRequest Action
+on:
+  push:
+    branches:
+    - FF-*
+
+jobs:
+  auto-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        branch: ${{ github.ref_name }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: ashley-taylor/regex-property-action@1.2
+      id: pr_title
+      with:
+        value: ${{ github.ref_name }}
+        regex: '[A-Z]+-[0-9]+-'
+        replacement: ''
+    - uses: atlassian/gajira-login@v2.0.0
+      name: Login
+      env:
+        JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+        JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+        JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+    - name: Jira Find issue key
+      id: jira
+      uses: atlassian/gajira-find-issue-key@v2.0.2
+      with:
+        from: branch
+    - name: pull-request
+      uses: repo-sync/pull-request@v2.6.2
+      with:
+        source_branch: ''
+        destination_branch: main
+        pr_title: '[${{ steps.jira.outputs.issue }}] ${{ steps.pr_title.outputs.value }}'
+        pr_template: .github/PULL_REQUEST_TEMPLATE.md
+          #pr_reviewer: "wei,worker"
+        pr_assignee: kimsoungryoul
+        pr_label: AutoPullRequestAction,NewFeature                                   # Comma-separated list (no spaces)
+        pr_allow_empty: false                                # 브랜치에 변경사항 없으면 AutoPullRequest 생성 생략됩니다
+        github_token: ${{ secrets.GITHUB_TOKEN }}
