@@ -1,4 +1,4 @@
-name: PR Lint
+name: PullRequest Lint 검토
 
 on:
   pull_request:
